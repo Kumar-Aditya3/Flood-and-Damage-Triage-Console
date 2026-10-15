@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flood Triage Console</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>%F0%9F%8C%8A</text></svg>">
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <span class="mark">Triage</span>
+      <h1>Flood &amp; Damage Triage Console</h1>
+      <span class="sdg">SDG&nbsp;11 · SDG&nbsp;13</span>
+    </div>
+    <div class="spacer"></div>
+    <label class="field">Event
+      <select id="eventSel"></select>
+    </label>
+    <span id="visionPill" class="vision-pill"><span class="dot"></span><span class="txt">vision…</span></span>
+    <button class="btn ghost" id="btnRerun" title="Recompute change detection for this event">Re-run</button>
+    <button class="btn ghost" id="btnGeojson">GeoJSON</button>
+    <button class="btn ghost" id="btnCsv">CSV</button>
+  </header>
+
+  <div class="main">
+    <aside class="sidebar">
+      <div class="summary" id="summary"></div>
+      <div class="listhead">
+        <span>Prioritized candidates</span>
+        <span class="count" id="listCount"></span>
+      </div>
+      <div class="cards" id="cards"></div>
+    </aside>
+
+    <div class="mapwrap">
+      <div id="map"></div>
+
+      <div class="scalebadge" id="scaleBadge"></div>
+
+      <div class="mapctl">
+        <h3>Base imagery</h3>
+        <div class="seg" id="baseSeg">
+          <button data-base="before">Before</button>
+          <button data-base="after" class="on">After</button>
+        </div>
+        <h3>Overlays</h3>
+        <label class="toggle"><input type="checkbox" id="tgPriority" checked>
+          <span class="sw" style="background:linear-gradient(90deg,#f00,#ff0)"></span> Flood extent (heat)</label>
+        <label class="toggle"><input type="checkbox" id="tgFlood">
+          <span class="sw" style="background:#2f97ff"></span> New water</label>
+        <label class="toggle"><input type="checkbox" id="tgRoads" checked>
+          <span class="sw" style="background:#ff4d4d"></span> Flooded roads</label>
+        <label class="toggle"><input type="checkbox" id="tgPlaces" checked>
+          <span class="sw" style="background:#e6a73c"></span> Settlements</label>
+        <h3 style="margin-top:11px">Overlay opacity</h3>
+        <input type="range" id="opacity" min="0" max="100" value="60">
+        <div class="ro"><span>0%</span><span id="opVal">60%</span></div>
+      </div>
+
+      <div class="legend">
+        <div style="color:var(--ink);font-weight:600;margin-bottom:2px">Flood extent</div>
+        <div class="ramp"></div>
+        <div class="ends"><span>sparse</span><span>continuous</span></div>
+        <div class="wrow"><span class="sw" style="background:#2f97ff"></span> newly inundated land</div>
+        <div class="wrow"><span class="sw" style="width:16px;height:3px;background:#ff4d4d"></span> road under water (access cut)</div>
+        <div class="wrow"><span class="cand-marker" style="width:16px;height:16px;font-size:9px">1</span> ranked settlement</div>
+      </div>
+
+      <div class="loading" id="loading">computing change detection…</div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <div class="mh">
+      <h2 id="mTitle">Candidate</h2>
+      <button class="x" id="mClose">×</button>
+    </div>
+    <div class="trio">
+      <figure><img id="mBefore" alt="before"><figcaption>BEFORE</figcaption></figure>
+      <figure><img id="mAfter" alt="after"><figcaption>AFTER</figcaption></figure>
+      <figure><img id="mOverlay" alt="overlay"><figcaption>NEW-WATER OVERLAY</figcaption></figure>
+    </div>
+    <div class="mbody"><div class="desc" id="mDesc"></div></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="vendor/leaflet/leaflet.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

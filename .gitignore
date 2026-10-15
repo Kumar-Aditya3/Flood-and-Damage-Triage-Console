@@ -1,0 +1,93 @@
+# =============================================================================
+# Flood & Damage Triage Console — repository ignore rules
+#
+# Goal: the first commit carries source only. No assistant/session state, no
+# presentations, no PDFs, no images, no large binaries, no fetched data.
+# Everything excluded here is either regenerable by a script or private.
+# =============================================================================
+
+# --- AI assistant / session state --------------------------------------------
+# Local assistant workspace: conversation memory, session logs, project notes.
+# Private by nature — never commit or share.
+/.workbuddy-ai/
+
+# --- secrets -----------------------------------------------------------------
+# Real credentials live in .env and must never be committed.
+# NOTE: .env.example is intentionally NOT ignored — it is the committed template.
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+
+# --- presentations -----------------------------------------------------------
+*.ppt
+*.pptx
+*.pps
+*.ppsx
+*.pot
+*.potx
+*.pptm
+*.ppsm
+*.potm
+# Deck authoring sources (the Lean Canvas pitch deck and its page files).
+*.slide
+# Generated deck project: slide sources, image assets and tool caches.
+# Spaces are escaped with a backslash — gitignore does not use quote delimiters.
+/Flood\ Triage\ Lean\ Canvas/
+.cache/
+.slidep/
+
+# --- documents ---------------------------------------------------------------
+*.pdf
+
+# --- images ------------------------------------------------------------------
+# Covers generated screenshots, satellite GeoTIFFs, analysis renders and any
+# exported figures. If you later add hand-authored UI icons as .svg under
+# frontend/, un-ignore them with:  !frontend/**/*.svg
+*.png
+*.jpg
+*.jpeg
+*.jpe
+*.gif
+*.bmp
+*.webp
+*.tif
+*.tiff
+*.ico
+*.svg
+
+# --- archives & large binaries -----------------------------------------------
+# tools/ollama.zip is ~490 MB — over GitHub's 100 MB hard limit, so committing
+# it would cause the push to be rejected outright.
+*.zip
+*.7z
+*.rar
+*.tar
+*.gz
+/tools/ollama/
+
+# --- fetched & generated data ------------------------------------------------
+# Every file under data/ is produced by scripts/fetch_sample.py and
+# scripts/fetch_osm.py (imagery, OSM context, analysis output). Committing it
+# would add tens of MB of binaries and stale derived state. Run the fetch
+# scripts after cloning instead — see README "Fetch data".
+/data/
+/docs/shots/
+/docs/screens/
+
+# --- python ------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# --- os / editor -------------------------------------------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

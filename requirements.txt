@@ -1,0 +1,13 @@
+# Flood & Damage Triage — backend dependencies (Python 3.13)
+# Install:  py -3.13 -m venv .venv ; .venv\Scripts\pip install -r requirements.txt
+fastapi==0.143.0
+uvicorn[standard]==0.54.0
+python-multipart==0.0.32
+httpx==0.28.1
+numpy==2.5.3
+scipy==1.18.1
+opencv-python==5.0.0.93
+scikit-image==0.26.0
+rasterio==1.5.2
+pillow==12.3.0
+python-dotenv==1.2.4
